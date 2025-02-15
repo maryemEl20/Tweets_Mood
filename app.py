@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request
 import joblib
 import sqlite3
-import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 from datetime import datetime
 import matplotlib.dates as mdates
+
+import matplotlib
+matplotlib.use('Agg')  # Utiliser un backend non interactif
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 app.secret_key = "secret_key"
@@ -22,7 +25,7 @@ def init_db():
                         text TEXT,
                         prediction TEXT,
                         date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                        session_id TEXT)''')  # Correction de la faute de frappe
+                        session_id TEXT)''')
     conn.commit()
     conn.close()
 
@@ -65,14 +68,14 @@ def create_graph(dates_str, y, title, color):
     img = BytesIO()
     plt.savefig(img, format='png', bbox_inches='tight')
     img.seek(0)
-    plt.close(fig)
+    plt.close(fig)  # Fermer la figure pour libérer la mémoire
     return base64.b64encode(img.getvalue()).decode('utf-8')
 
 @app.route('/stats')
 def stats():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT date, prediction FROM sentiments ORDER BY date")
+    cursor.execute("SELECT date, prediction FROM sentiments WHERE date >= datetime('now', '-1 hour') ORDER BY date;")    
     sentiment_data = cursor.fetchall()
     conn.close()
 

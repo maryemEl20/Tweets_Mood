@@ -6,26 +6,28 @@
 <body>
     <h1>Statistiques des Sentiments</h1>
 
+    <!-- Message si aucune donnée n'est disponible -->
     {% if message %}
         <p class="no-data-message">{{ message }}</p>
     {% else %}
+        <!-- Conteneur pour les graphiques -->
         <div class="graph-container">
             <!-- Graphique Positif -->
             <div class="graph-card positive">
                 <h3>Positifs</h3>
-                <img src="data:image/png;base64,{{ img_pos }}" alt="Graphique des sentiments positifs">
+                <img src="data:image/png;base64,{{ img_pos }}" alt="Graphique des sentiments positifs" class="graph-image">
             </div>
 
             <!-- Graphique Neutre -->
             <div class="graph-card neutral">
                 <h3>Neutres</h3>
-                <img src="data:image/png;base64,{{ img_neu }}" alt="Graphique des sentiments neutres">
+                <img src="data:image/png;base64,{{ img_neu }}" alt="Graphique des sentiments neutres" class="graph-image">
             </div>
 
             <!-- Graphique Négatif -->
             <div class="graph-card negative">
                 <h3>Négatifs</h3>
-                <img src="data:image/png;base64,{{ img_neg }}" alt="Graphique des sentiments négatifs">
+                <img src="data:image/png;base64,{{ img_neg }}" alt="Graphique des sentiments négatifs" class="graph-image">
             </div>
         </div>
     {% endif %}

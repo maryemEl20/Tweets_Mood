@@ -1,8 +1,4 @@
-
-
-/**/
-
-/* Style général */
+/* Exemple de CSS */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
@@ -11,58 +7,53 @@ body {
 }
 
 h1 {
-    text-align: center;
     color: #333;
+    text-align: center;
 }
 
-/* Conteneur des graphiques */
+.no-data-message {
+    color: #666;
+    text-align: center;
+    font-style: italic;
+}
+
 .graph-container {
     display: flex;
+    justify-content: space-around;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: center;
+    margin-top: 20px;
 }
 
-/* Carte pour chaque graphique */
 .graph-card {
-    background: white;
-    border-radius: 10px;
+    background-color: #fff;
+    border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    flex: 1;
-    min-width: 300px;
-    max-width: 400px;
+    width: 30%;
+    text-align: center;
 }
 
-/* Titres des graphiques */
 .graph-card h3 {
-    text-align: center;
-    margin-top: 0;
+    margin-bottom: 15px;
+    color: #555;
 }
 
-/* Couleurs des titres */
-.graph-card.positive h3 {
-    color: #4CAF50; /* Vert */
-}
-
-.graph-card.neutral h3 {
-    color: #9E9E9E; /* Gris */
-}
-
-.graph-card.negative h3 {
-    color: #F44336; /* Rouge */
-}
-
-/* Images des graphiques */
-.graph-card img {
-    width: 100%;
+.graph-image {
+    max-width: 100%;
     height: auto;
-    border-radius: 5px;
+    border-radius: 4px;
 }
 
-/* Message d'absence de données */
-.no-data-message {
-    text-align: center;
-    color: #666;
-    font-size: 1.2em;
+/* Couleurs spécifiques pour chaque sentiment */
+.positive {
+    border-bottom: 4px solid #4CAF50; /* Vert pour positif */
+}
+
+.neutral {
+    border-bottom: 4px solid #9E9E9E; /* Gris pour neutre */
+}
+
+.negative {
+    border-bottom: 4px solid #F44336; /* Rouge pour négatif */
 }
