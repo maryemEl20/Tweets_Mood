@@ -1,0 +1,68 @@
+
+
+/**/
+
+/* Style général */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+/* Conteneur des graphiques */
+.graph-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Carte pour chaque graphique */
+.graph-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+}
+
+/* Titres des graphiques */
+.graph-card h3 {
+    text-align: center;
+    margin-top: 0;
+}
+
+/* Couleurs des titres */
+.graph-card.positive h3 {
+    color: #4CAF50; /* Vert */
+}
+
+.graph-card.neutral h3 {
+    color: #9E9E9E; /* Gris */
+}
+
+.graph-card.negative h3 {
+    color: #F44336; /* Rouge */
+}
+
+/* Images des graphiques */
+.graph-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Message d'absence de données */
+.no-data-message {
+    text-align: center;
+    color: #666;
+    font-size: 1.2em;
+}

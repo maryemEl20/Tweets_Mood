@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Analyse des Sentiments{% endblock %}
+
+{% block content %}
+    <h1>Analyse des Sentiments</h1>
+    <form action="/predict" method="post">
+        <textarea name="text" rows="4" placeholder="Entrez votre texte ici..."></textarea>
+        <br><br>
+        <input type="submit" value="Analyser">
+    </form>
+    {% if prediction_text %}
+        <h2>{{ prediction_text }}</h2>
+    {% endif %}
+{% endblock %}

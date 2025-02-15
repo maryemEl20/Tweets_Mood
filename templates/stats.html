@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Statistiques des Sentiments{% endblock %}
+
+{% block content %}
+<body>
+    <h1>Statistiques des Sentiments</h1>
+
+    {% if message %}
+        <p class="no-data-message">{{ message }}</p>
+    {% else %}
+        <div class="graph-container">
+            <!-- Graphique Positif -->
+            <div class="graph-card positive">
+                <h3>Positifs</h3>
+                <img src="data:image/png;base64,{{ img_pos }}" alt="Graphique des sentiments positifs">
+            </div>
+
+            <!-- Graphique Neutre -->
+            <div class="graph-card neutral">
+                <h3>Neutres</h3>
+                <img src="data:image/png;base64,{{ img_neu }}" alt="Graphique des sentiments neutres">
+            </div>
+
+            <!-- Graphique Négatif -->
+            <div class="graph-card negative">
+                <h3>Négatifs</h3>
+                <img src="data:image/png;base64,{{ img_neg }}" alt="Graphique des sentiments négatifs">
+            </div>
+        </div>
+    {% endif %}
+</body>
+{% endblock %}
