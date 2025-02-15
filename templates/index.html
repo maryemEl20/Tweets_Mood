@@ -10,6 +10,6 @@
         <input type="submit" value="Analyser">
     </form>
     {% if prediction_text %}
-        <h2>{{ prediction_text }}</h2>
+        <h2>{{ prediction_text | safe }}</h2>
     {% endif %}
 {% endblock %}

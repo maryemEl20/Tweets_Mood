@@ -41,7 +41,14 @@ def predict():
         text = request.form['text']
         text_vec = vectorizer.transform([text])
         prediction = model.predict(text_vec)
-        sentiment = "Positif 🙂" if prediction[0] == 'Positive' else "Négatif 😡" if prediction[0] == 'Negative' else "Neutre 😐"
+        
+        # Correction de la logique if-else
+        if prediction[0] == 'Positive':
+            sentiment = "Positif <img src='/static/images/happy.png' alt='Positif' width='30' height='30'>"
+        elif prediction[0] == 'Negative':
+            sentiment = "Négatif <img src='/static/images/angry.png' alt='Négatif' width='30' height='30'>"
+        else:
+            sentiment = "Neutre <img src='/static/images/neutral.png' alt='Neutre' width='30' height='30'>"
 
         conn = sqlite3.connect("database.db")
         cursor = conn.cursor()
@@ -50,7 +57,10 @@ def predict():
         conn.close()
         
         return render_template('index.html', prediction_text=f'Sentiment: {sentiment}')
-
+    else:
+        return "Méthode non autorisée", 405  # Retourne une erreur 405 si la méthode n'est pas POST
+    
+    
 def create_graph(dates_str, y, title, color):
     dates = [datetime.strptime(d, '%Y-%m-%d %H:%M:%S') for d in dates_str]
     fig, ax = plt.subplots()
@@ -104,4 +114,4 @@ def stats():
     return render_template('stats.html', img_pos=img_pos, img_neu=img_neu, img_neg=img_neg)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=8080)  # Utilisez un port différent
