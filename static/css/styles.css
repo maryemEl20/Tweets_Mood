@@ -22,6 +22,12 @@
     transition: background-color 0.3s;
 }
 
+.logo {
+    padding: 10px 20px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+  }
+
 .button:hover {
     background-color: #1976D2;
 }
