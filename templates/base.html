@@ -9,8 +9,10 @@
 </head>
 <body>
     <header class="header">
-        <a href="{{ url_for('home') }}" class="logo"><h2>LOGO</h2></a>
-        <a href="{{ url_for('stats') }}" class="button">Tendances des Sentiments</a>
+        <a href="{{ url_for('home') }}" class="logo">
+            <img src="{{ url_for('static', filename='../static/images/logo (2).png') }}" alt="Logo" style="height: 90px;">
+        </a>
+                <a href="{{ url_for('stats') }}" class="button">Tendances des Sentiments</a>
     </header>
 
     <div class="container">
