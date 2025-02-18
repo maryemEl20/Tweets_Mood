@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Tendances des Sentiments{% endblock %}
+
+{% block content %}
+        <!-- About Start -->
+        <div class="container-xxl py-5">
+            <div class="container py-5 px-lg-5">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6">
+                        <h1 class="mb-5">About Tweets Mood</h1>
+                        <p class="mb-4">Tweets Mood is an advanced sentiment analysis tool designed to process and analyze tweets in real-time. Using cutting-edge AI and natural language processing (NLP) techniques, we classify tweets as positive, negative, or neutral to help users understand public sentiment on various topics.</p>
+                        <p class="mb-4">Whether you are a social media researcher, a marketer, or just curious about the public's opinion on a topic, Tweets Mood provides a quick and reliable way to analyze the emotional tone behind tweets. Our tool works by collecting tweets related to specific keywords or hashtags and performing sentiment analysis on each one to detect the underlying mood.</p>
+                        <p class="mb-4">Join thousands of users who are leveraging the power of sentiment analysis to gain valuable insights from social media conversations.</p>
+                        <a href="{{ url_for('how_it_works') }}" class="btn btn-primary py-sm-3 px-sm-5 rounded-pill mt-3">How It Works</a>
+                    </div>
+                    <div class="col-lg-6">
+                        <img class="img-fluid" src="static/images/A.png" alt="About Tweets Mood">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About End -->
+{% endblock %}

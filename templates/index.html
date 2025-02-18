@@ -1,15 +1,110 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}Analyse des Sentiments{% endblock %}
+<head>
+    <meta charset="utf-8">
+    <title>Tweets Mood - Sentiment Analysis</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Sentiment analysis, tweet analysis, NLP" name="keywords">
+    <meta content="Analyze the sentiment of tweets in real time and understand public opinion instantly." name="description">
 
-{% block content %}
-    <h1>Analyse des Sentiments</h1>
-    <form action="/predict" method="post">
-        <textarea name="text" rows="4" placeholder="Entrez votre texte ici..."></textarea>
-        <br><br>
-        <input type="submit" value="Analyser">
-    </form>
-    {% if prediction_text %}
-        <h2>{{ prediction_text | safe }}</h2>
-    {% endif %}
-{% endblock %}
+    <!-- Favicon -->
+    <link href="static/images/icon1.png" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&family=Jost:wght@500;600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-xxl bg-white p-0">
+        <!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0">
+            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+                <a href="{{ url_for('home') }}" class="navbar-brand d-flex align-items-center p-0">
+                    <img src="{{ url_for('static', filename='images/logo4.png') }}" alt="Logo" class="me-2">
+                </a>  
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav mx-auto py-0">
+                        <a href="{{ url_for('home') }}" class="nav-item nav-link">Home</a>
+                        <a href="{{ url_for('about') }}" class="nav-item nav-link">About</a>
+                        <a href="{{ url_for('how_it_works') }}" class="nav-item nav-link">How It Works</a>
+                        <a href="{{ url_for('stats') }}" class="nav-item nav-link">Statistics</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-xxl bg-primary hero-header">
+                <div class="container px-lg-5">
+                    <div class="row g-5 align-items-end">
+                        <div class="col-lg-6 text-center text-lg-start">
+                            <h1 class="text-white mb-4">Analyze the Sentiment of Any Tweet Instantly</h1>
+                            <p class="text-white pb-3">Discover whether a tweet expresses positivity, negativity, or neutrality with our advanced sentiment analysis tool.</p>
+                            <a href="{{ url_for('how_it_works') }}" class="btn btn-secondary py-sm-3 px-sm-5 rounded-pill me-3">Try Now</a>
+                        </div>
+                        <div class="col-lg-6 text-center text-lg-start">
+                            <img class="img-fluid" src="static/images/sentiment-analysis2.png" alt="Sentiment Analysis">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+        <!-- About Start -->
+        <div class="container-xxl py-5">
+            <div class="container py-5 px-lg-5">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6">
+                        <img class="img-fluid" src="static/images/about.png" alt="About">
+                    </div>
+                    <div class="col-lg-6">
+                        <h1 class="mb-5">Understand Public Opinion in Real Time</h1>
+                        <p class="mb-4">Our AI-powered sentiment analysis tool processes tweets to determine their emotional tone. Whether you are a researcher, marketer, or just curious, get insights on trending topics instantly.</p>
+                        <a href="{{ url_for('about') }}" class="btn btn-primary py-sm-3 px-sm-5 rounded-pill mt-3">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About End -->
+
+        <!-- Footer Start -->
+        <div class="container-fluid bg-primary text-light footer">
+            <div class="container py-5 px-lg-5">
+                <div class="row g-5">
+                    <div class="col-md-6 col-lg-3">
+                        <p class="section-title text-white h5 mb-4">Contact Us</p>
+                        <p><i class="fa fa-envelope me-3"></i>contact@tweetsmood.com</p>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <p class="section-title text-white h5 mb-4">Quick Links</p>
+                        <a class="btn btn-link" href="{{ url_for('about') }}">About Us</a>
+                        <a class="btn btn-link" href="{{ url_for('how_it_works') }}">How It Works</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

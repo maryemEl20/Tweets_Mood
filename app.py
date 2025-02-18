@@ -35,6 +35,14 @@ init_db()
 def home():
     return render_template('index.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/how-it-works')
+def how_it_works():
+    return render_template('how_it_works.html')
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if request.method == 'POST':
@@ -48,9 +56,9 @@ def predict():
         if prediction[0] == 'Positive':
             sentiment = "Positif <img src='/static/images/happy.png' alt='Positif' width='30' height='30'>"
         elif prediction[0] == 'Negative':
-            sentiment = "Négatif <img src='/static/images/angry.png' alt='Négatif' width='30' height='30'>"
+            sentiment = "Negatif <img src='/static/images/angry.png' alt='Négatif' width='30' height='30'>"
         else:
-            sentiment = "Neutre <img src='/static/images/neutral.png' alt='Neutre' width='30' height='30'>"
+            sentiment = "neutral <img src='/static/images/neutral.png' alt='Neutre' width='30' height='30'>"
 
         # Créer le message
         message_with_sentiment = f"Message: {text} - Sentiment: {sentiment}"
@@ -64,10 +72,19 @@ def predict():
         cursor.execute("INSERT INTO sentiments (text, prediction) VALUES (?, ?)", (text, prediction[0]))
         conn.commit()
         conn.close()
+<<<<<<< HEAD
 
         # Passer le message et le sentiment au template
         return render_template('index.html', prediction_text=message_with_sentiment)  # Renvoie le message complet
 
+=======
+        
+        return render_template('how_it_works.html', prediction_text=f'Sentiment: {sentiment}')
+    else:
+        return "Méthode non autorisée", 405  # Retourne une erreur 405 si la méthode n'est pas POST
+    
+    
+>>>>>>> c0ba539d2e7e60a49231e2d7eb78c7aef718b323
 def create_graph(dates_str, y, title, color):
     dates = [datetime.strptime(d, '%Y-%m-%d %H:%M:%S') for d in dates_str]
     fig, ax = plt.subplots()

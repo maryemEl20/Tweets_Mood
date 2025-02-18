@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Sentiment Trends{% endblock %}
+
+{% block content %}
+    <section class="my-5">
+        <div class="container">
+            <h1 class="text-center mb-4">Sentiment Analysis</h1>
+            <div class="row justify-content-center align-items-center min-vh-50"> <!-- Center horizontally and vertically -->
+                <div class="col-md-8 col-lg-6"> <!-- Form size -->
+                    <form action="/predict" method="post" class="card p-4 shadow">
+                        <div class="mb-3">
+                            <textarea name="text" rows="5" class="form-control" placeholder="Enter your text here..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-search"></i> Analyze
+                        </button>
+                    </form>
+                    {% if prediction_text %}
+                        <div class="mt-4 text-center">
+                            <h2>{{ prediction_text | safe }}</h2>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

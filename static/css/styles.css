@@ -48,3 +48,14 @@ input[type="submit"] {
     cursor: pointer;
     font-size: 16px;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Ajuster le contenu principal pour éviter qu'il soit caché par le header */
+main {
+    padding-top: 80px; /* Espacement pour ne pas cacher le contenu sous le header */
+}
