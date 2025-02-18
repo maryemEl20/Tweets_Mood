@@ -41,8 +41,10 @@ def predict():
         text = request.form['text']
         text_vec = vectorizer.transform([text])
         prediction = model.predict(text_vec)
-        
-        # Correction de la logique if-else
+
+        # Debug - Afficher le texte et la prédiction
+        print(f"Text: {text} | Sentiment: {prediction[0]}")
+
         if prediction[0] == 'Positive':
             sentiment = "Positif <img src='/static/images/happy.png' alt='Positif' width='30' height='30'>"
         elif prediction[0] == 'Negative':
@@ -50,17 +52,22 @@ def predict():
         else:
             sentiment = "Neutre <img src='/static/images/neutral.png' alt='Neutre' width='30' height='30'>"
 
+        # Créer le message
+        message_with_sentiment = f"Message: {text} - Sentiment: {sentiment}"
+
+        # Debug - Afficher ce qui sera envoyé au template
+        print(f"Message with sentiment: {message_with_sentiment}")
+
+        # Sauvegarder dans la base de données
         conn = sqlite3.connect("database.db")
         cursor = conn.cursor()
         cursor.execute("INSERT INTO sentiments (text, prediction) VALUES (?, ?)", (text, prediction[0]))
         conn.commit()
         conn.close()
-        
-        return render_template('index.html', prediction_text=f'Sentiment: {sentiment}')
-    else:
-        return "Méthode non autorisée", 405  # Retourne une erreur 405 si la méthode n'est pas POST
-    
-    
+
+        # Passer le message et le sentiment au template
+        return render_template('index.html', prediction_text=message_with_sentiment)  # Renvoie le message complet
+
 def create_graph(dates_str, y, title, color):
     dates = [datetime.strptime(d, '%Y-%m-%d %H:%M:%S') for d in dates_str]
     fig, ax = plt.subplots()
@@ -108,7 +115,7 @@ def stats():
         negatives.append(neg_count)
     
     img_pos = create_graph(dates, positives, "Évolution des Positifs", "green")
-    img_neu = create_graph(dates, neutrals, "Évolution des Neutres", "gray")
+    img_neu = create_graph(dates, neutrals, "Évolution des Neutres", "yellow")
     img_neg = create_graph(dates, negatives, "Évolution des Négatifs", "red")
     
     return render_template('stats.html', img_pos=img_pos, img_neu=img_neu, img_neg=img_neg)

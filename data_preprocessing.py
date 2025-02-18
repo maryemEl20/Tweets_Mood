@@ -6,6 +6,8 @@ import nltk
 from nltk.corpus import stopwords
 import string
 import joblib
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
 
 nltk.download('stopwords')
 
@@ -41,9 +43,16 @@ def vectorize_data(X_train, X_test):
 
 def train_model(X_train_vec, y_train):
     # Entraîner un modèle SVM
-    model = svm.SVC(kernel='linear')
+    model = svm.SVC(kernel='linear', probability=True)  
     model.fit(X_train_vec, y_train)
     return model
+
+def evaluate_model(model, X_test_vec, y_test):
+    y_pred = model.predict(X_test_vec)
+    accuracy = accuracy_score(y_test, y_pred)
+    cm = confusion_matrix(y_test, y_pred)
+    report = classification_report(y_test, y_pred, target_names=['Positive', 'Negative', 'Neutral'])
+    return accuracy, cm, report
 
 if __name__ == "__main__":
     # Charger et prétraiter les données
@@ -62,5 +71,13 @@ if __name__ == "__main__":
     # Sauvegarder le modèle et le vectorizer
     joblib.dump(model, 'model/svm_model.pkl')
     joblib.dump(vectorizer, 'model/vectorizer.pkl')
+
     
     print("Modèle entraîné et sauvegardé avec succès !")
+
+    accuracy, cm, report = evaluate_model(model, X_test_vec, y_test)    
+    print(f"Prediction Accuracy: {accuracy * 100:.2f}%")
+    print("\nConfusion Matrix:")
+    print(cm)
+    print("\nClassification Report:")
+    print(report)
