@@ -6,8 +6,17 @@ import nltk
 from nltk.corpus import stopwords
 import string
 import joblib
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+import re
 
 nltk.download('stopwords')
+
+def clean_text(text):
+    text = text.lower()  # Mettre en minuscule
+    text = re.sub(r"http\S+|www\S+|https\S+", '', text, flags=re.MULTILINE)  # Supprimer les liens
+    text = re.sub(r'\@\w+|\#','', text)  # Supprimer les mentions et hashtags
+    text = re.sub(r'\d+', '', text)  # Supprimer les chiffres
+    return text
 
 def load_data(filepath):
     # Charger les données
@@ -21,11 +30,16 @@ def preprocess_data(data):
     # Convertir la colonne 'tweet' en type string (au cas où elle contient des nombres)
     data.loc[:, 'tweet'] = data['tweet'].astype(str)  # Utiliser .loc pour éviter les avertissements
     
+    # Nettoyage du texte (minuscule, suppression des liens, mentions, chiffres, etc.)
+    data.loc[:, 'tweet'] = data['tweet'].apply(clean_text)
+
     # Supprimer les stopwords et la ponctuation
     stop_words = set(stopwords.words('english'))
     data.loc[:, 'tweet'] = data['tweet'].apply(lambda x: ' '.join([word for word in x.split() if word.lower() not in stop_words]))
     data.loc[:, 'tweet'] = data['tweet'].apply(lambda x: x.translate(str.maketrans('', '', string.punctuation)))
+    
     return data
+
 
 def split_data(data):
     # Diviser les données en ensembles d'entraînement et de test
@@ -44,6 +58,13 @@ def train_model(X_train_vec, y_train):
     model = svm.SVC(kernel='linear')
     model.fit(X_train_vec, y_train)
     return model
+
+def evaluate_model(model, X_test_vec, y_test):
+    y_pred = model.predict(X_test_vec)
+    accuracy = accuracy_score(y_test, y_pred)
+    cm = confusion_matrix(y_test, y_pred)
+    report = classification_report(y_test, y_pred, target_names=['Positive', 'Negative', 'Neutral'])
+    return accuracy, cm, report
 
 if __name__ == "__main__":
     # Charger et prétraiter les données
@@ -64,3 +85,9 @@ if __name__ == "__main__":
     joblib.dump(vectorizer, 'model/vectorizer.pkl')
     
     print("Modèle entraîné et sauvegardé avec succès !")
+    
+    accuracy, cm, report = evaluate_model(model, X_test_vec, y_test)    
+    print(f"Prediction Accuracy: {accuracy * 100:.2f}%")
+
+    print("\nClassification Report:")
+    print(report)

@@ -49,24 +49,29 @@ def predict():
         text = request.form['text']
         text_vec = vectorizer.transform([text])
         prediction = model.predict(text_vec)
-        
-        # Correction de la logique if-else
-        if prediction[0] == 'Positive':
-            sentiment = "Positif <img src='/static/images/happy.png' alt='Positif' width='30' height='30'>"
-        elif prediction[0] == 'Negative':
-            sentiment = "Negatif <img src='/static/images/angry.png' alt='Négatif' width='30' height='30'>"
-        else:
-            sentiment = "neutral <img src='/static/images/neutral.png' alt='Neutre' width='30' height='30'>"
 
+        # Debug - Afficher le texte et la prédiction
+        print(f"Text: {text} | Sentiment: {prediction[0]}")
+
+        if prediction[0] == 'Positive':
+            sentiment = "Positif </br> <img src='/static/images/happy.png' alt='Positif' width='40' height='40'>"
+        elif prediction[0] == 'Negative':
+            sentiment = "Negative </br> <img src='/static/images/angry.png' alt='Négatif' width='40' height='40'>"
+        else:
+            sentiment = "Neutral </br> <img src='/static/images/neutral.png' alt='Neutre' width='40' height='40'>"
+
+        # Créer le message
+        message_with_sentiment = f"{text} : {sentiment}"
+
+        # Sauvegarder dans la base de données
         conn = sqlite3.connect("database.db")
         cursor = conn.cursor()
         cursor.execute("INSERT INTO sentiments (text, prediction) VALUES (?, ?)", (text, prediction[0]))
         conn.commit()
         conn.close()
-        
-        return render_template('how_it_works.html', prediction_text=f'Sentiment: {sentiment}')
-    else:
-        return "Méthode non autorisée", 405  # Retourne une erreur 405 si la méthode n'est pas POST
+
+        # Passer le message et le sentiment au template
+        return render_template('how_it_works.html', prediction_text=message_with_sentiment)  # Renvoie le message complet
     
     
 def create_graph(dates_str, y, title, color):
