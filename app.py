@@ -7,13 +7,13 @@ from datetime import datetime
 import matplotlib.dates as mdates
 
 import matplotlib
-matplotlib.use('Agg')  # Utiliser un backend non interactif
+matplotlib.use('Agg')  # Use a non-interactive backend
 import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 app.secret_key = "secret_key"
 
-# Charger le modèle et le vectorizer
+# Load the model and vectorizer
 model = joblib.load('model/svm_model.pkl')
 vectorizer = joblib.load('model/vectorizer.pkl')
 
@@ -49,64 +49,27 @@ def predict():
         text = request.form['text']
         text_vec = vectorizer.transform([text])
         prediction = model.predict(text_vec)
-<<<<<<< HEAD
-
-        # Debug - Afficher le texte et la prédiction
-        print(f"Text: {text} | Sentiment: {prediction[0]}")
 
         if prediction[0] == 'Positive':
-            sentiment = "Positif </br> <img src='/static/images/happy.png' alt='Positif' width='40' height='40'>"
+            sentiment = "Positive </br> <img src='/static/images/happy.png' alt='Positif' width='40' height='40'>"
         elif prediction[0] == 'Negative':
             sentiment = "Negative </br> <img src='/static/images/angry.png' alt='Négatif' width='40' height='40'>"
         else:
             sentiment = "Neutral </br> <img src='/static/images/neutral.png' alt='Neutre' width='40' height='40'>"
 
-        # Créer le message
+        # Create the message with sentiment
         message_with_sentiment = f"{text} : {sentiment}"
-=======
 
-        # Debug - Afficher le texte et la prédiction
-        print(f"Text: {text} | Sentiment: {prediction[0]}")
-
-        if prediction[0] == 'Positive':
-            sentiment = "Positif <img src='/static/images/happy.png' alt='Positif' width='30' height='30'>"
-        elif prediction[0] == 'Negative':
-            sentiment = "Negatif <img src='/static/images/angry.png' alt='Négatif' width='30' height='30'>"
-        else:
-            sentiment = "neutral <img src='/static/images/neutral.png' alt='Neutre' width='30' height='30'>"
-
-        # Créer le message
-        message_with_sentiment = f"Message: {text} - Sentiment: {sentiment}"
-
-        # Debug - Afficher ce qui sera envoyé au template
-        print(f"Message with sentiment: {message_with_sentiment}")
->>>>>>> ef075006b025a1af406f6ea4dae18834e0589002
-
-        # Sauvegarder dans la base de données
+        # Save to the database
         conn = sqlite3.connect("database.db")
         cursor = conn.cursor()
         cursor.execute("INSERT INTO sentiments (text, prediction) VALUES (?, ?)", (text, prediction[0]))
         conn.commit()
         conn.close()
-<<<<<<< HEAD
 
-        # Passer le message et le sentiment au template
-        return render_template('how_it_works.html', prediction_text=message_with_sentiment)  # Renvoie le message complet
-=======
-<<<<<<< HEAD
+        # Pass the message and sentiment to the template
+        return render_template('how_it_works.html', prediction_text=message_with_sentiment)
 
-        # Passer le message et le sentiment au template
-        return render_template('index.html', prediction_text=message_with_sentiment)  # Renvoie le message complet
-
-=======
-        
-        return render_template('how_it_works.html', prediction_text=f'Sentiment: {sentiment}')
-    else:
-        return "Méthode non autorisée", 405  # Retourne une erreur 405 si la méthode n'est pas POST
->>>>>>> ef075006b025a1af406f6ea4dae18834e0589002
-    
-    
->>>>>>> c0ba539d2e7e60a49231e2d7eb78c7aef718b323
 def create_graph(dates_str, y, title, color):
     dates = [datetime.strptime(d, '%Y-%m-%d %H:%M:%S') for d in dates_str]
     fig, ax = plt.subplots()
@@ -115,7 +78,7 @@ def create_graph(dates_str, y, title, color):
     ax.set_xlabel("Temps")
     ax.set_ylabel("Nombre de Messages")
     
-    # Formatage des dates
+    # Format dates
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M'))
     ax.xaxis.set_major_locator(mdates.AutoDateLocator())
     plt.xticks(rotation=45)
@@ -124,7 +87,7 @@ def create_graph(dates_str, y, title, color):
     img = BytesIO()
     plt.savefig(img, format='png', bbox_inches='tight')
     img.seek(0)
-    plt.close(fig)  # Fermer la figure pour libérer la mémoire
+    plt.close(fig)  # Close the figure to free memory
     return base64.b64encode(img.getvalue()).decode('utf-8')
 
 @app.route('/stats')
@@ -160,4 +123,4 @@ def stats():
     return render_template('stats.html', img_pos=img_pos, img_neu=img_neu, img_neg=img_neg)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8080)  # Utilisez un port différent
+    app.run(debug=True, port=8080)  # Use a different port
