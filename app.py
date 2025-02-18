@@ -35,6 +35,14 @@ init_db()
 def home():
     return render_template('index.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/how-it-works')
+def how_it_works():
+    return render_template('how_it_works.html')
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if request.method == 'POST':
@@ -46,9 +54,9 @@ def predict():
         if prediction[0] == 'Positive':
             sentiment = "Positif <img src='/static/images/happy.png' alt='Positif' width='30' height='30'>"
         elif prediction[0] == 'Negative':
-            sentiment = "Négatif <img src='/static/images/angry.png' alt='Négatif' width='30' height='30'>"
+            sentiment = "Negatif <img src='/static/images/angry.png' alt='Négatif' width='30' height='30'>"
         else:
-            sentiment = "Neutre <img src='/static/images/neutral.png' alt='Neutre' width='30' height='30'>"
+            sentiment = "neutral <img src='/static/images/neutral.png' alt='Neutre' width='30' height='30'>"
 
         conn = sqlite3.connect("database.db")
         cursor = conn.cursor()
@@ -56,7 +64,7 @@ def predict():
         conn.commit()
         conn.close()
         
-        return render_template('index.html', prediction_text=f'Sentiment: {sentiment}')
+        return render_template('how_it_works.html', prediction_text=f'Sentiment: {sentiment}')
     else:
         return "Méthode non autorisée", 405  # Retourne une erreur 405 si la méthode n'est pas POST
     

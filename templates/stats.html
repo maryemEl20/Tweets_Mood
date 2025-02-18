@@ -3,33 +3,36 @@
 {% block title %}Statistiques des Sentiments{% endblock %}
 
 {% block content %}
+
 <body>
-    <h1>Statistiques des Sentiments</h1>
+    <div class="container">
+        <h1 class="page-title">Statistiques des Sentiments</h1>
 
-    <!-- Message si aucune donnée n'est disponible -->
-    {% if message %}
-        <p class="no-data-message">{{ message }}</p>
-    {% else %}
-        <!-- Conteneur pour les graphiques -->
-        <div class="graph-container">
-            <!-- Graphique Positif -->
-            <div class="graph-card positive">
-                <h3>Positifs</h3>
-                <img src="data:image/png;base64,{{ img_pos }}" alt="Graphique des sentiments positifs" class="graph-image">
-            </div>
+        <!-- Message si aucune donnée n'est disponible -->
+        {% if message %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% else %}
+            <div class="graph-container">
+                <!-- Graphique Positif -->
+                <div class="graph-card positive">
+                    <h3>Positifs</h3>
+                    <img src="data:image/png;base64,{{ img_pos }}" alt="Graphique des sentiments positifs" class="graph-image">
+                </div>
 
-            <!-- Graphique Neutre -->
-            <div class="graph-card neutral">
-                <h3>Neutres</h3>
-                <img src="data:image/png;base64,{{ img_neu }}" alt="Graphique des sentiments neutres" class="graph-image">
-            </div>
+                <!-- Graphique Neutre -->
+                <div class="graph-card neutral">
+                    <h3>Neutres</h3>
+                    <img src="data:image/png;base64,{{ img_neu }}" alt="Graphique des sentiments neutres" class="graph-image">
+                </div>
 
-            <!-- Graphique Négatif -->
-            <div class="graph-card negative">
-                <h3>Négatifs</h3>
-                <img src="data:image/png;base64,{{ img_neg }}" alt="Graphique des sentiments négatifs" class="graph-image">
+                <!-- Graphique Négatif -->
+                <div class="graph-card negative">
+                    <h3>Négatifs</h3>
+                    <img src="data:image/png;base64,{{ img_neg }}" alt="Graphique des sentiments négatifs" class="graph-image">
+                </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 </body>
+
 {% endblock %}
