@@ -94,7 +94,7 @@ def create_graph(dates_str, y, title, color):
 def stats():
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT date, prediction FROM sentiments WHERE date >= datetime('now', '-1 hour') ORDER BY date;")    
+    cursor.execute("SELECT date, prediction FROM sentiments WHERE date >= datetime('now', '-24 hours') ORDER BY date;")
     sentiment_data = cursor.fetchall()
     conn.close()
 
